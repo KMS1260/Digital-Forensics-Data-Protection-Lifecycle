@@ -44,11 +44,11 @@ In your local browser's address bar on the new tab, enter http://dftt.sourceforg
 
 Select Extended Partition Test.
 
-![](./Performing%20Digital%20Forensics/0.png)
+![](./images/0.png)
 
 Look over the contents of the Extended DOS Partition Test page. You may need to return to this page later.
 
-![](./Performing%20Digital%20Forensics/1.jpg)
+![](./images/1.jpg)
 
 Leave the local browser tab open that is focused on dftt.sourceforge.net
 
@@ -70,7 +70,7 @@ ls /media/cdrom0/
 ```
 > ⚠️ **Note** for you it could be in a folder or in the downloads file so replace the /cdrom0 to whichever folder you have put the downloaded zip files we going to use in this project. also if you don't know how to create a DVD Drive in linux VM watch this Youtube video https://www.youtube.com/watch?v=muJpfNgtQ_U or search in youtube how to create dvd drive in linux vm
 
-![](./Performing%20Digital%20Forensics/3.png)
+![](./images/3.png)
 
 - Enter the following command to copy the forensic test image files to the /root/Downloads directory:
 
@@ -79,7 +79,7 @@ ls /media/cdrom0/
 ```bash
 cp /media/cdrom0/* /root/Downloads/
 ```
-![](./Performing%20Digital%20Forensics/4.png)
+![](./images/4.png)
 
 - Enter **Unzip the 1-extend-part.zip** file in the /root/Downloads directory, change into the resulting directory, then view a long list of its contents.
 ```bash
@@ -106,7 +106,7 @@ cd 1-extend-part
 ls -l
 ```
 
-![](./Performing%20Digital%20Forensics/5.png)
+![](./images/5.png)
 
 The ext-part-test-2.dd is the forensic test image file that we will be evaluating in this exercise.
 
@@ -118,7 +118,7 @@ Using fdisk to display the partition details of the drive image.
 ```bash
 fdisk -l ext-part-test-2.dd
 ```
-![](./Performing%20Digital%20Forensics/6.png)
+![](./images/6.png)
 
 In the presentation of partition details from fdisk, we notice that the 4th line is listed with a Type of Extended. Therefore, this is not a formattable volume, but it is the 4th primary partition which has been converted into an extended partition and then further subdivided.
 
@@ -159,7 +159,7 @@ we decide to use a different drive image analysis tool to see if we can discover
 testdisk -l ext-part-test-2.dd
 ```
 
-![](./Performing%20Digital%20Forensics/7.png)
+![](./images/7.png)
 
 We notice that this tool shows a total of 7 numbered entries. One more than what fdisk was able to discover.
 
@@ -173,7 +173,7 @@ Use fiwalk to analyze the drive image.
 fiwalk ext-part-test-2.dd | less
 ```
 
-![](./Performing%20Digital%20Forensics/8.png)
+![](./images/8.png)
 
 When using the less file viewing utility, press the **spacebar** to view the next page. You can return to a previous page using **b** or scroll one line **up** or **down** utilizing the arrow keys. When you are finished looking over the results, type **q** to exit the less viewer.
 
@@ -186,7 +186,7 @@ Use **fsstat** to extract more information about the partitions, especially the 
 fsstat ext-part-test-2.dd
 ```
 
-![](./Performing%20Digital%20Forensics/9.png)
+![](./images/9.png)
 
 You should see an error stating that the file system type was not determined. You remember that the fiwalk command displayed the file system type as "fat16".
 
@@ -195,7 +195,7 @@ You should see an error stating that the file system type was not determined. Yo
 fsstat -f fat16 ext-part-test-2.dd
 ```
 
-![](./Performing%20Digital%20Forensics/10.png)
+![](./images/10.png)
 
 You should see an error displayed, indicating that the magic value is invalid. This indicates that the initial partition table is corrupted and cannot be automatically interpreted by fsstat.
 
@@ -204,7 +204,7 @@ You should see an error displayed, indicating that the magic value is invalid. T
 mmls ext-part-test-2.dd
 ```
 
-![](./Performing%20Digital%20Forensics/11.png)
+![](./images/11.png)
 
 The Start column displays the sector offset for each drive division. Also, notice that the hidden extended volume is line 14 in this tool's output display.
 
@@ -213,7 +213,7 @@ The Start column displays the sector offset for each drive division. Also, notic
 fsstat -f fat16 ext-part-test-2.dd -o 262143
 ```
 
-![](./Performing%20Digital%20Forensics/12.png)
+![](./images/12.png)
 
 This tool displays more information than what we had access to previously, but nothing is very interesting at this point.
 
@@ -226,7 +226,7 @@ Use the TSK tool fls to pull file information from the hidden partition.
 fls -f fat16 ext-part-test-2.dd -o 262143
 ```
 
-![](./Performing%20Digital%20Forensics/13.png)
+![](./images/13.png)
 
 You should see a file named second-3.txt and other items preceded by a dollar sign. These $named items are system-hidden volume management components.
 
@@ -238,7 +238,7 @@ Use another TSK tool, istat, to pull inode information from the hidden partition
 istat -f fat16 ext-part-test-2.dd -o 262143 1
 ```
 
-![](./Performing%20Digital%20Forensics/14.png)
+![](./images/14.png)
 
 Notice there is an additional digit at the end of this command, which is the reference for the inode for istat to retrieve.
 
@@ -249,7 +249,7 @@ We should see an error claiming the Metadata address is too small for image.
 istat -f fat16 ext-part-test-2.dd -o 262143 2
 ```
 
-![](./Performing%20Digital%20Forensics/15.png)
+![](./images/15.png)
 
 This reveals information about the root directory.
 
@@ -258,7 +258,7 @@ This reveals information about the root directory.
 istat -f fat16 ext-part-test-2.dd -o 262143 3
 ```
 
-![](./Performing%20Digital%20Forensics/16.png)
+![](./images/16.png)
 
 This inode is for the file in the root of the drive named second-3.txt.
 
@@ -267,7 +267,7 @@ This inode is for the file in the root of the drive named second-3.txt.
 istat -f fat16 ext-part-test-2.dd -o 262143 4
 ```
 
-![](./Performing%20Digital%20Forensics/17.png)
+![](./images/17.png)
 
 This inode is for another file in the root of the drive named SECOND-3.txt. But notice this file has timestamps while the other inode entries do not. This could have been a file present on the drive prior to it being converted into a hidden partition, and thus it retained its original timestamps. However, this file was deleted or otherwise removed from this partition and was somehow corrupted, and is unable to be restored.
 
@@ -276,7 +276,7 @@ This inode is for another file in the root of the drive named SECOND-3.txt. But 
 istat -f fat16 ext-part-test-2.dd -o 262143 5
 ```
 
-![](./Performing%20Digital%20Forensics/18.png)
+![](./images/18.png)
 
 This result of an invalid metadata address indicates that we have viewed all of the inode details available.
 
@@ -295,7 +295,7 @@ we need to create a virtual device from the drive image file.
 ```bash
 losetup --partscan --find --show ext-part-test-2.dd
 ```
-![](./Performing%20Digital%20Forensics/19.png)
+![](./images/19.png)
 
 The output of this command should be **/dev/loop0**. This indicates the virtual device has been created.
 
@@ -309,7 +309,7 @@ mkdir /mnt/p6
 mount /dev/loop0p7 /mnt/p6
 ```
 
-![](./Performing%20Digital%20Forensics/20.png)
+![](./images/20.png)
 
 The use of **/dev/loop0p7** is to reference the 7th partition table item, which is the 6th partition. Remember that the 4th partition table item is the extended partition, which was originally the 4th primary partition. Its position must still be taken into account when performing mounting.
 
@@ -323,7 +323,7 @@ cd /mnt/p6
 ls -l
 ```
 
-![](./Performing%20Digital%20Forensics/21.png)
+![](./images/21.png)
 
 You should see the file **second-3.txt** but not **SECOND-3.txt**. The SECOND-3.txt file may have been deleted and overwritten, as it is not recoverable from this forensic image test file.
 
@@ -345,7 +345,7 @@ In your local browser's address bar on the new tab, enter http://dftt.sourceforg
 
 Select NTFS Undelete (and leap year) Test #1.
 
-![](./Performing%20Digital%20Forensics/22.png)
+![](./images/22.png)
 
 Look over the contents of the NTFS Undelete (and leap year) Test #1 page. You may need to return to this page later.
 
@@ -382,7 +382,7 @@ cd 7-undel-ntfs
 ls -l
 ```
 
-![](./Performing%20Digital%20Forensics/23.png)
+![](./images/23.png)
 
 The 7-ntfs-undel.dd is the forensic test image file that we will be evaluating in this project.
 
@@ -407,7 +407,7 @@ mkdir /mnt/temp7
 ls -l /mnt/temp7
 ```
 
-![](./Performing%20Digital%20Forensics/24.png)
+![](./images/24.png)
 
 The results will show a System Volume Information directory but nothing else. This causes you to think that the suspect may have deleted files that you may be able to recover.
 
@@ -418,7 +418,7 @@ Use **tsk_recover** (a TSK tool) to attempt to automatically recover the deleted
 tsk_recover 7-ntfs-undel.dd output
 ```
 
-![](./Performing%20Digital%20Forensics/25.png)
+![](./images/25.png)
 
 You should see the statement: Files Recovered: 8.
 
@@ -428,7 +428,7 @@ You should see the statement: Files Recovered: 8.
 ls -l output
 ```
 
-![](./Performing%20Digital%20Forensics/26.png)
+![](./images/26.png)
 
 Discover the recovered filenames that are not located in the root of the output recovery directory.
 
@@ -441,7 +441,7 @@ ls -l output/dir1
 ```bash
 ls -l output/dir1/dir2
 ```
-![](./Performing%20Digital%20Forensics/27.png)
+![](./images/27.png)
 
 **Quick question** What are the names of the recovered files that are in sub-directories?
 - <details>
@@ -473,7 +473,7 @@ On your local computer, open another tab in your current browser or open a new b
 
 Select Basic Data Carving Test #1.
 
-![](./Performing%20Digital%20Forensics/28.png)
+![](./images/28.png)
 
 Look over the contents of the Basic Data Carving Test #1 page.
 
@@ -508,7 +508,7 @@ cd 11-carve-fat
 ls -l
 ```
 
-![](./Performing%20Digital%20Forensics/29.png)
+![](./images/29.png)
 
 The **11-carve-fat.dd** is the forensic test image file that you will be evaluating in this exercise. 
 
@@ -525,7 +525,7 @@ Now that we have access to the drive image from the suspect's system, we will st
   mount 11-carve-fat.dd /mnt/temp11
   ```
 
-![](./Performing%20Digital%20Forensics/30.png)
+![](./images/30.png)
 
 This should result in a mounting error. This indicates that something is corrupted in the image and cannot be mounted for direct file system analysis.
 
@@ -536,7 +536,7 @@ This should result in a mounting error. This indicates that something is corrupt
   fdisk -l 11-carve-fat.dd
   ```
 
-![](./Performing%20Digital%20Forensics/31.png)
+![](./images/31.png)
 
 This should result in a partial presentation of information. Notice that the Disk identifier: value is all zeros, and there is no partition table displayed. Something is wrong with this drive image.
 
@@ -547,7 +547,7 @@ Use **fiwalk** to perform a drive image analysis.
   fiwalk 11-carve-fat.dd
   ```
 
-![](./Performing%20Digital%20Forensics/32.png)
+![](./images/32.png)
 
 Notice the results include numerous errors, most of which state Possible encryption detected.
 
@@ -558,7 +558,7 @@ Use **fsstat** to display file system statistics of the drive image. You may nee
 fsstat 11-carve-fat.dd
 ```
 
-![](./Performing%20Digital%20Forensics/33.png)
+![](./images/33.png)
 
 This tool should also show an error of Possible encryption detected. However, previously, you needed to define the file system type for this tool to work. Try guessing the file system type. Start with fat16.
 
@@ -567,7 +567,7 @@ This tool should also show an error of Possible encryption detected. However, pr
   fsstat -f fat16 11-carve-fat.dd
   ```
 
-![](./Performing%20Digital%20Forensics/34.png)
+![](./images/34.png)
 
 The error presented now is that there is an Invalid magic value. This indicates that the initial partition table is corrupted and cannot be automatically interpreted by fsstat.
 
@@ -576,7 +576,7 @@ The error presented now is that there is an Invalid magic value. This indicates 
   mmls 11-carve-fat.dd
   ```
 
-![](./Performing%20Digital%20Forensics/35.png)
+![](./images/35.png)
 
 This tool will provide no results. Therefore, you cannot determine the partition offset values to use with fsstat, fls, or istat.
 
@@ -598,47 +598,47 @@ The TestDisk tool should open and present the 11-carve-fat.dd file for processin
 
 - Notice that at the bottom of the interface the **[Proceed ]** option is highlighted. Press Enter on your keyboard to select this option.
 
-![](./Performing%20Digital%20Forensics/36.png)
+![](./images/36.png)
 
 
 - Use your keyboard's down arrow key to select **[None ]** as the partition table type, then press **Enter** on your keyboard.
 
-![](./Performing%20Digital%20Forensics/37.png)
+![](./images/37.png)
 
 - This will result in a display of an Unknown partition, which is already highlighted. Press **Enter** on your keyboard.
 
-![](./Performing%20Digital%20Forensics/38.png)
+![](./images/38.png)
 
 - Use your keyboard's down arrow key to select **FAT16** as the partition type, then press **Enter** on your keyboard.
 
-![](./Performing%20Digital%20Forensics/39.png)
+![](./images/39.png)
 
 If you don't know the partition type, you may need to guess until to find a working option.
 
 - You are returned to the previous screen, which now has the partition labeled as "FAT16". Use your keyboard's right arrow key to highlight **[Undelete]** at the bottom of the screen, then press **Enter** on your keyboard.
 
-![](./Performing%20Digital%20Forensics/40.png)
+![](./images/40.png)
 
 The resulting page will have a message of: No file found, filesystems may be damaged.
 
-![](./Performing%20Digital%20Forensics/41.png)
+![](./images/41.png)
 
 Type **q** to exit the Undelete function and return to the previous screen.
 
 - Use your keyboard's left arrow key to highlight **[ Boot ]** at the bottom of the screen, then press **Enter** on your keyboard.
 
-![](./Performing%20Digital%20Forensics/42.png)
+![](./images/42.png)
 
 - The **[Rebuild BS]** at the bottom of the screen is already highlighted. Press **Enter** on your keyboard.
 
-![](./Performing%20Digital%20Forensics/43.png)
+![](./images/43.png)
 
 This will attempt to rebuild the boot sector. This could be the cause of the read and access problem of this drive image.
 
 The rebuild function will provide a result that includes the statement "Extrapolated boot sector and current boot sector are different.". The **[ List ]** option at the bottom of the screen is already highlighted. Press **Enter** on your keyboard.
 
-![](./Performing%20Digital%20Forensics/44.png)
-![](./Performing%20Digital%20Forensics/45.png)
+![](./images/44.png)
+![](./images/45.png)
 
 Notice that a list of files is presented. The rebuild boot sector operation was able to restore access to the drive image. However, this repair is only in memory and has not changed the original .dd file. we need to extract all recoverable files from the in-memory repaired image.
 
@@ -646,12 +646,12 @@ Notice that a list of files is presented. The rebuild boot sector operation was 
 
 > ⚠️ Be sure to type a capital C. Otherwise, the lowercase version will only copy a single file
 
-![](./Performing%20Digital%20Forensics/46.png)
+![](./images/46.png)
 
 A output directory selection screen is shown. Use your keyboard's down arrow key to highlight the **output** directory, press **Enter** on your keyboard to enter the output directory, then type **C** to copy the files to the current directory.
 
-![](./Performing%20Digital%20Forensics/47.png)
-![](./Performing%20Digital%20Forensics/48.png)
+![](./images/47.png)
+![](./images/48.png)
 
 This operation should result in a success message above the file list of "Copy done! 15 OK, 0 failed".
 
@@ -667,11 +667,11 @@ View the contents of the recovered files.
   ls -l
   ```
   
-![](./Performing%20Digital%20Forensics/49.png)
+![](./images/49.png)
 
 If the directory listing does not display properly, enter reset, then try the command again.
 
-![](./Performing%20Digital%20Forensics/50.png)
+![](./images/50.png)
 
 You should see the 15 recovered files.
 
@@ -680,7 +680,7 @@ You should see the 15 recovered files.
    xdg-open haxor2.jpg
   ```
 
-![](./Performing%20Digital%20Forensics/51.jpg)
+![](./images/51.jpg)
 
 Use your keyboard's up and down arrows to view the other graphics from this directory. When you are finished viewing these pictures, type **CTRL+C** to exit the graphics viewer.
 
@@ -689,7 +689,7 @@ Use your keyboard's up and down arrows to view the other graphics from this dire
   xdg-open lin_1.2.pdf
   ```
 
-![](./Performing%20Digital%20Forensics/52.png)
+![](./images/52.png)
 
 When you are finished looking at this PDF, type **CTRL+C** to exit.
 
