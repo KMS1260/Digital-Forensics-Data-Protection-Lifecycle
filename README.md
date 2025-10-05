@@ -19,7 +19,7 @@ Each project is treated as a standalone case study, and includes:
 | 01 | Performing Drive Sanitization        | Data Erasure, Media Disposal, Secure Overwriting                 | [View Project](https://github.com/KMS1260/Digital-Forensics-Data-Protection-Lifecycle/blob/projects/01-performing-drive-sanitization/README.md)|
 | 02 | Implementing Backups                 | Data Redundancy, Disaster Recovery, Volume Shadow Copy           | [View Project](https://github.com/KMS1260/Digital-Forensics-Data-Protection-Lifecycle/blob/projects/02-implementing-backups/README.md)         |
 | 03 | Using Storage Encryption             | Data Confidentiality, EFS, Recovery Agents                       | [View Project](https://github.com/KMS1260/Digital-Forensics-Data-Protection-Lifecycle/blob/projects/03-using-Storage-encryption/README.md)     |
-| 04 | Performing Digital Forensics         | Evidence Collection, Partition Analysis, File Recovery           | [View Project](https://github.com/KMS1260/Digital-Forensics-Data-Protection-Lifecycle/tree/projects/04-performing-digital-forensics)           |
+| 04 | Performing Digital Forensics         | Evidence Collection, Partition Analysis, File Recovery           | [View Project](https://github.com/KMS1260/Digital-Forensics-Data-Protection-Lifecycle/blob/projects/04-performing-digital-forensics/README.md) |
 
 ---
 
