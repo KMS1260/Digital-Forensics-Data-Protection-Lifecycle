@@ -1,9 +1,9 @@
-# 01 – Performing Drive Sanitization
+# 01 – Performing Drive Sanitisation
 
-This document captures the complete procedure and screenshots for preparing, testing, and securely sanitizing a removable drive. All content is written in a brand‑neutral, professional style and preserves the full procedural detail from the source project.
+This document captures the complete procedure and screenshots for preparing, testing, and securely sanitising a removable drive. All content is written in a brand‑neutral, professional style and preserves the full procedural detail from the source project.
 
 ### Objectives
-- Prep a removable drive; compare delete/format vs true sanitization.
+- Prep a removable drive; compare delete/format vs true sanitisation.
 - Secure-delete files; attempt recovery; perform full-disk wipe.
 
 ### Tools & Techniques
@@ -18,27 +18,27 @@ fdisk v: Remaining sectors unallocated
 ### Key Takeaways
 - Deletion/formatting ≠ destruction.  
 - `shred` kills content; metadata may linger.  
-- Full-media overwrite (or physical destruction) is reliable sanitization.
+- Full-media overwrite (or physical destruction) is reliable sanitisation.
 
 ## Table of Contents
 - [1. Preparing the Drive](#1-preparing-the-drive)
 - [2. Deleting and Recovering Files](#2-deleting-and-recovering-files)
 - [3. Secure File Deletion with Shred](#3-secure-file-deletion-with-shred)
 - [4. Formatting and Recovery Attempt](#4-formatting-and-recovery-attempt)
-- [5. Full Disk Sanitization](#5-full-disk-sanitization)
+- [5. Full Disk Sanitisation](#5-full-disk-sanitisation)
 
 
 ## 1. Preparing the Drive
 
 
-Performing drive sanitization
+Performing drive sanitisation
 Scenario
-In this project, you will learn about data and drive sanitization. As a security team member of
-the organization, you are working to improve your organization's security stance. This project focuses
-on data destruction to prevent unauthorized access to data through data recovery efforts. First, you
+In this project, you will learn about data and drive sanitisation. As a security team member of
+the organisation, you are working to improve your organisation's security stance. This project focuses
+on data destruction to prevent unauthorised access to data through data recovery efforts. First, you
 will prep a portable drive for use. Next, you will delete and undelete a file objects, and then you will
 securely delete files using shred. Finally, you will format a drive to destroy data, and then you will
-sanitize a drive.
+sanitise a drive.
 Environment
 You will be working from a virtual machine named a Kali Linux system.
 Prep a portable drive for use
@@ -49,7 +49,7 @@ storage device with numerous OSes. You need to create a primary partition using 
 free space and then format that drive with FAT32. You will then copy some files to the drive.
 
 Open a Terminal window by selecting the Terminal Emulator from the Kali Linux toolbar.
-It may be helpful to maximize the Terminal window.
+It may be helpful to maximise the Terminal window.
 
 Enter fdisk -l to display the currently present storage devices connected to the Kali VM.
 ```bash
@@ -275,7 +275,7 @@ Enter cat /mnt/SalesStorage/Passwords/bt4-password.txt to view the contents of o
 cat /mnt/SalesStorage/Passwords/bt4-password.txt
 ```
 
-Use the following command to use find and shred to securely delete all files within the Passwords directory on the SalesStorage storage location using a zeroization process:
+Use the following command to use find and shred to securely delete all files within the Passwords directory on the SalesStorage storage location using a zeroisation process:
 
 ```bash
 find /mnt/SalesStorage/Passwords -type f -exec shred -uvz {} \;
@@ -283,7 +283,7 @@ find /mnt/SalesStorage/Passwords -type f -exec shred -uvz {} \;
 
 ![](./images/31.png)
 
-This secure deletion and zeroization process is a bit involved, so it will take up to a minute to complete. You will see the verbose progress output as the operations are performed. 
+This secure deletion and zeroisation process is a bit involved, so it will take up to a minute to complete. You will see the verbose progress output as the operations are performed. 
 The shred utility only accepts individual files as targets. This command combines the find tool's function to locate and identify files as a means to send filenames as input to the shred utility.
 
 Enter ls -lR /mnt/SalesStorage/Passwords to view the recursive contents of the Passwords directory on the storage device.
@@ -373,7 +373,7 @@ cat Downloads/Passwords/bt4-password.txt.
 
 ![](./images/45.png)
 
-Notice the file has no contents. You can attempt to view the contents of any of the supposedly recovered files, but their contents have been shredded (i.e., zeroized).
+Notice the file has no contents. You can attempt to view the contents of any of the supposedly recovered files, but their contents have been shredded (i.e., zeroised).
 
 This technique does protect the data, but the filenames, directory names, and file sizes are still retained. And it seems to only address data that is still retained in a standard file.
 
@@ -397,7 +397,7 @@ umount /mnt/SalesStorage
 
 The command is umount NOT unmount.
 
-Enter mkfs -t fat /dev/sdb1 to format the storage device to attempt to sanitize the data.
+Enter mkfs -t fat /dev/sdb1 to format the storage device to attempt to sanitise the data.
 ```bash
 mkfs -t fat /dev/sdb1
 ```
@@ -435,14 +435,14 @@ This indicates that any remaining data is not recoverable using the testdisk uti
 
 Press CTRL+C to exit testdisk and return to the Terminal window prompt.
 
-There are some commercial drive recovery utilities and services which may be able to restore data after reformatting. Therefore, formatting is not considered a secure sanitization or data destruction technique. But, for low classification, sensitivity, or value data, it may be sufficient.
+There are some commercial drive recovery utilities and services which may be able to restore data after reformatting. Therefore, formatting is not considered a secure sanitisation or data destruction technique. But, for low classification, sensitivity, or value data, it may be sufficient.
 
 Leave the Terminal window open.
 
-## 5. Full Disk Sanitization
+## 5. Full Disk Sanitisation
 
 
-Drive sanitization is the forceful overwriting of the entire drive with alternate data as a means to
+Drive sanitisation is the forceful overwriting of the entire drive with alternate data as a means to
 destroy data and prevent data remnant recovery. In this exercise, you will use dd (i.e., disk duplicator)
 to destroy all data on a storage device through overwriting.
 
@@ -461,7 +461,7 @@ cp -r /usr/share/seclists/* /mnt/SalesStorage/
 
 ![](./images/53.png)
 
-Enter the following command to perform a zeroization sanitization of the storage device:   
+Enter the following command to perform a zeroisation sanitisation of the storage device:   
 
 > ⚠️ **Destructive:** Double‑check the target device (`/dev/sdb`) before running `dd`.
 ```bash
