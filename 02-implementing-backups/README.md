@@ -38,7 +38,7 @@ Use the Start menu or search to open **Command Prompt** as Administrator.
   
 ![Open Command Prompt](./images/0.png)
 
-**Initialize and format Disk 1 as Backup01 (F:)**  
+**Initialise and format Disk 1 as Backup01 (F:)**  
 Use DiskPart to bring Disk 1 online, clear read-only, create a primary partition, quick-format NTFS with label **Backup01**, and assign the letter **F**.
 ```text
 diskpart
