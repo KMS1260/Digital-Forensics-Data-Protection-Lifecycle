@@ -60,7 +60,7 @@ cipher /c Jan-Security.txt -> Recovery certificate: Admin (DRA)
 
 About EFS (Encrypting File System)
 
-Storage encryption can live at different layers—full-disk, partition, volume, file, database, even individual records. In this project we focus on file-level encryption using EFS, a feature of NTFS on Windows. EFS encrypts each file with a one-time file encryption key (FEK) (symmetric), then protects that FEK by encrypting it with the user’s EFS certificate (asymmetric). A designated Data Recovery Agent (DRA) can also hold a protected copy so authorized recovery is possible.
+Storage encryption can live at different layers—full-disk, partition, volume, file, database, even individual records. In this project we focus on file-level encryption using EFS, a feature of NTFS on Windows. EFS encrypts each file with a one-time file encryption key (FEK) (symmetric), then protects that FEK by encrypting it with the user’s EFS certificate (asymmetric). A designated Data Recovery Agent (DRA) can also hold a protected copy so authorised recovery is possible.
 
 Important—set a DRA first:
 Always configure and back up a DRA before encrypting anything with EFS. If a user’s password is reset or their EFS private key is lost/corrupted, files can become unreadable without a DRA.
@@ -207,7 +207,7 @@ Close the Console1 window. Select No when prompted to save settings.
 
 ![](./images/27.png)
 
-Stand-alone Non-Domain joined Windows systems do not have a pre-defined Data Recovery Agent (DRA). A domain-member Windows system may or may not have a DRA defined. The DRA can recover EFS encrypted files in the event the original owner and encryptor of the files loses access or is removed from the computer or organization. In order for this recovery process to function, a DRA must be defined prior to the encryption of files.
+Stand-alone Non-Domain joined Windows systems do not have a pre-defined Data Recovery Agent (DRA). A domain-member Windows system may or may not have a DRA defined. The DRA can recover EFS encrypted files in the event the original owner and encryptor of the files loses access or is removed from the computer or organisation. In order for this recovery process to function, a DRA must be defined prior to the encryption of files.
 
 Create a new local user account named Pat with password of Password1.
 Return to the Administrator: Command Prompt.
@@ -414,7 +414,7 @@ Attempt to open **Mar-Security.txt** by double-clicking is filename. You are abl
 
 ![](./images/59.png)
 
-EFS can be used as a means by which individual users can limit access to files and folders without the need to configure access control settings on those files and folders. Any user that does not possess the correct EFS key will be unable to access the EFS encrypted files. While EFS does hide the context of files from other non-authorized users, it does not hide the existence of or the name of the file.
+EFS can be used as a means by which individual users can limit access to files and folders without the need to configure access control settings on those files and folders. Any user that does not possess the correct EFS key will be unable to access the EFS encrypted files. While EFS does hide the context of files from other non-authorised users, it does not hide the existence of or the name of the file.
 
 ---
 
