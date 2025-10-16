@@ -7,7 +7,7 @@ This guide documents the complete workflow for performing post-incident forensic
 
 ## Objectives
 
-- Analyze a forensic drive image to **discover a hidden partition**.
+- Analyse a forensic drive image to **discover a hidden partition**.
 - Recover **deleted files** from a forensic drive image.
 - Perform **file carving** to extract inaccessible files from a damaged image.
 
@@ -62,7 +62,7 @@ other files to download (Basic Data Carving Test #1 "**11-carve-fat.zip**") - (N
 
 Open a Terminal window by selecting the Terminal Emulator from the Kali Linux toolbar
 
-The Terminal window should already be elevated to use root privileges. Maximize the Terminal window.
+The Terminal window should already be elevated to use root privileges. Maximise the Terminal window.
 
 - Enter the following command to view the contents of the DVD Drive: 
 ```bash 
@@ -163,10 +163,10 @@ testdisk -l ext-part-test-2.dd
 
 We notice that this tool shows a total of 7 numbered entries. One more than what fdisk was able to discover.
 
-> ⚠️**Note** If the output of testdisk is not well organzied by columns, enter reset, then run the testdiskcommand again.
+> ⚠️**Note** If the output of testdisk is not well organsied by columns, enter reset, then run the testdiskcommand again.
 
 
-Use fiwalk to analyze the drive image.
+Use fiwalk to analyse the drive image.
 
 - Enter the following to view the output of this drive image analysis tool through the less viewer.
 ```bash
@@ -175,7 +175,7 @@ fiwalk ext-part-test-2.dd | less
 
 ![](./images/8.png)
 
-When using the less file viewing utility, press the **spacebar** to view the next page. You can return to a previous page using **b** or scroll one line **up** or **down** utilizing the arrow keys. When you are finished looking over the results, type **q** to exit the less viewer.
+When using the less file viewing utility, press the **spacebar** to view the next page. You can return to a previous page using **b** or scroll one line **up** or **down** utilising the arrow keys. When you are finished looking over the results, type **q** to exit the less viewer.
 
 This forensic test image file is crafted with a text file in each partition named after the partition. We can view these filenames for each partition by scrolling through the output and watching for the change in the partition number.
 
@@ -280,7 +280,7 @@ istat -f fat16 ext-part-test-2.dd -o 262143 5
 
 This result of an invalid metadata address indicates that we have viewed all of the inode details available.
 
-An inode is a file system metadata structure that is used to store and organize file object information, such as file size, owner user, group IDs, permissions, and timestamps.
+An inode is a file system metadata structure that is used to store and organise file object information, such as file size, owner user, group IDs, permissions, and timestamps.
 In this forensic image test file of a drive image, this file is a confirmation that we are viewing the contents of the hidden partition, which is the 3rd logical drive in the extended partition. With 3 primaries, this hidden partition is the 6th formattable volume from this drive image.
 
 This is a very small drive with only enough content to prove the concept of a hidden partition. A real drive from a production system, even a hidden partition created by an attacker, would likely contain a significant number of inodes.
